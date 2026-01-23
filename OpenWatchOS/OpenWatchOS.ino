@@ -1,11 +1,8 @@
 #include "display.hpp"
 #include "bitmaps.hpp"
 #include "WILInterpreter.hpp"
-#include <SPI.h>
-#include <SD.h>
-
-#define SD_CS 7
-
+#include "FS.hpp"
+#define VERBOSE 1
 int displaytimeold = 0;
 int apptimeold = 0;
 
@@ -15,7 +12,7 @@ void setup() {
   draw_bmp(0, 0, splash, 128, 64);
   update_screen();
   SPI.begin();
-  if (!SD.begin(SD_CS)) {
+  if (!FSinit()) {
     display_clear();
     draw_bmp(0, 0, file_err, 128, 64);
     update_screen();
