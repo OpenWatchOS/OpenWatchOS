@@ -10,7 +10,9 @@ void display_init() {
   set_text_size(1);
   display.display();
 }
-
+void display_clear(){
+  display.clearDisplay();
+}
 void print_text(String text) {
   display.println(text);
 }
