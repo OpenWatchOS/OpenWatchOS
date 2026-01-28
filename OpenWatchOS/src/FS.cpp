@@ -8,12 +8,11 @@ FileStructure fileStructure;
 bool FSinit() {
   if (!SD.begin(SD_CS)) {
     return false;
+    Serial.println("sd failure");
   }
   if (!LittleFS.begin()) {
     return false;
-  }
-  if (SD.exists("test.txt")) {
-    Serial.print("test works");
+    Serial.println("littleFS failure");
   }
   return true;
 }

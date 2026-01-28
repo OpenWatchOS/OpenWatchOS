@@ -14,6 +14,7 @@ void setup() {
   update_screen();
   SPI.begin();
   if (!FSinit()) {
+    Serial.println("fs init fail");
     display_clear();
     draw_bmp(0, 0, drive_err, 128, 64);
     update_screen();
