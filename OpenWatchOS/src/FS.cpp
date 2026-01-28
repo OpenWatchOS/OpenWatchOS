@@ -50,10 +50,13 @@ bool FileStructure::exists() {
 }
 bool FileStructure::rebuild() {
   if (fileStructure.exists()) {
-    if (!save()) {
+    if (!Configs.save()) {
       return false;
     }
+    Serial.println("conf created");
   }
-  Serial.println("conf created");
+  else{
+    Serial.println("conf already exists");
+  }
   return true;
 }

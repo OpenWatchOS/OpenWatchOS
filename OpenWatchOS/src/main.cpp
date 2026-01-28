@@ -19,11 +19,11 @@ void setup() {
     update_screen();
     return;
   }
-  LittleFS.format();
+  // LittleFS.format();
   if(!fileStructure.rebuild()){
     Serial.println("rebuild failed");
   }
-  load();
+  Configs.load();
   Serial.println("init complete");
 }
 
