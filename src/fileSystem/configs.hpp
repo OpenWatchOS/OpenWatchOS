@@ -2,6 +2,11 @@
 
 #include <string>
 #include "FS.hpp"
+#ifdef DONT_REQUIRE_SD
+    #define USE_SD 0
+#else
+    #define USE_SD 1
+#endif
 #define ConfigsLocation "/configs.bin"
 class configs {
 public:
@@ -15,6 +20,7 @@ public:
   } __attribute__((packed));
   struct devModeConf {
     bool verbose = true;
+    bool useSD = USE_SD;
   } __attribute__((packed));
   struct __attribute__((packed)) {
     internalConf internalConfig;

@@ -43,4 +43,8 @@ void display_log(String text){
   set_cursor(0,line);
   print_text(text);
   line += 8;
+  if(line == SCREEN_HEIGHT - 8){
+    line = 0;
+    display_clear();
+  }
 }

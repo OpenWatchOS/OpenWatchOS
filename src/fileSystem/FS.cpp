@@ -1,14 +1,20 @@
 #include "LittleFS.h"
 #include "FS.hpp"
+#include "debug/debug.hpp"
 #define SD_CS 7
 
 FileSystem fileSystem;
 FileStructure fileStructure;
 
 bool FSinit() {
-  if (!SD.begin(SD_CS)) {
-    return false;
-    Serial.println("sd failure");
+  if (Configs.packedConfigs.devModeConfig.useSD){
+    if (!SD.begin(SD_CS)) {
+      return false;
+      Serial.println("sd failure");
+    }
+  }
+  else{
+    Debug.print("using no sd mode");
   }
   if (!LittleFS.begin()) {
     return false;
