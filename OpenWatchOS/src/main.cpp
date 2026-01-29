@@ -1,7 +1,7 @@
-#include "display.hpp"
-#include "bitmaps.hpp"
-#include "FS.hpp"
-#include "configs.hpp"
+#include "display/display.hpp"
+#include "display/bitmaps.hpp"
+#include "fileSystem/FS.hpp"
+#include "fileSystem/configs.hpp"
 #define VERBOSE 1
 int displaytimeold = 0;
 int apptimeold = 0;
