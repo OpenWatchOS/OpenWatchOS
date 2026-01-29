@@ -11,6 +11,7 @@ bool FSinit() {
     if (!SD.begin(SD_CS)) {
       return false;
       Serial.println("sd failure");
+      
     }
   }
   else{

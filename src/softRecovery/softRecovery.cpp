@@ -7,7 +7,13 @@ void softRecovery::init()
     display_init();
     display_log("recovery entered");
     update_screen();
-    fileSystem.mkdir("recovery");
-    fileSystem.open("recovery/passed", "w", true);
+    const char *path = "/recovery/passed";
+    File f = fileSystem.open(path, "w", true);
+    if (!f)
+    {
+        display_log("Failed to create empty file");
+        return;
+    }
+    f.close();
     ESP.restart();
 }

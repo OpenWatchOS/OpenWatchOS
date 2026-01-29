@@ -5,8 +5,9 @@
 #include "softRecovery/softRecovery.hpp"
 #ifdef USE_SOFT_RECOVERY
 bool checkRecoveryExit(){
-    if(fileSystem.exists("recovery/passed")){
-        fileSystem.remove("recovery/passed");
+    const char *path = "/recovery/passed";
+    if(fileSystem.exists(path)){
+        fileSystem.remove(path);
         return true;
     }
     else{
@@ -17,7 +18,9 @@ bool checkRecoveryExit(){
 
 void initSS()
 {
-    FSinit();
+    if(!FSinit()){
+        while(true);//make diffrent later
+    }
     if(checkRecoveryExit()){
         SysInit();
     }
