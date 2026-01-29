@@ -50,6 +50,16 @@ bool FileSystem::mkdir(String path) {
     return LittleFS.mkdir(path);
   }
 }
+bool FileSystem::remove(String path){
+  String sPath = path;
+  if (sPath.startsWith("/sd")) {
+    sPath.replace("/sd", "");
+    return SD.remove(sPath);
+  } else {
+    return LittleFS.remove(path);
+  }
+  
+}
 bool FileStructure::exists() {
   return fileSystem.exists(ConfigsLocation);
 }

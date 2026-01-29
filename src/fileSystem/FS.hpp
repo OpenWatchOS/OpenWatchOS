@@ -15,6 +15,7 @@ public:
   bool exists(const char* path);
   bool mkdir(String path);
   bool mkdirp(String path);
+  bool remove(String path);
 private:
   File f;
 };

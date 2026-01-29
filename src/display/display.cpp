@@ -47,4 +47,5 @@ void display_log(String text){
     line = 0;
     display_clear();
   }
+  update_screen();
 }
