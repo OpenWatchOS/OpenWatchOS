@@ -2,19 +2,20 @@
 #include "display/bitmaps.hpp"
 #include "fileSystem/FS.hpp"
 #include "fileSystem/configs.hpp"
+#include "debug/debug.hpp"
 #define VERBOSE 1
 int displaytimeold = 0;
 int apptimeold = 0;
 
 void setup() {
   //screen init and splash screen
-  Serial.begin(9600);
   display_init();
+  Debug.print("main entered");
   draw_bmp(0, 0, splash, 128, 64);
   update_screen();
   SPI.begin();
   if (!FSinit()) {
-    Serial.println("fs init fail");
+    Debug.print("fs init fail");
     display_clear();
     draw_bmp(0, 0, drive_err, 128, 64);
     update_screen();
@@ -22,10 +23,10 @@ void setup() {
   }
   // LittleFS.format();
   if(!fileStructure.rebuild()){
-    Serial.println("rebuild failed");
+    Debug.print("rebuild failed");
   }
   Configs.load();
-  Serial.println("init complete");
+  Debug.print("init complete");
 }
 
 void loop() {

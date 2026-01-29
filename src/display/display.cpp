@@ -1,7 +1,7 @@
 #include "display.hpp"
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
-
+int line = 0;
 void display_init() {
   Wire.begin();
   display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS);
@@ -37,4 +37,10 @@ void set_cursor(int x, int y) {
 }
 void update_screen() {
   display.display();
+}
+void display_log(String text){
+  set_text_size(1);
+  set_cursor(0,line);
+  print_text(text);
+  line += 8;
 }

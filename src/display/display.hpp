@@ -20,3 +20,4 @@ void draw(int x , int y);
 void draw_bmp(int x, int y,const uint8_t *bitmap, int w, int h);
 void print_centered_text(int x, int y, String text,int textSize = 1);
 void display_clear();
+void display_log(String text);

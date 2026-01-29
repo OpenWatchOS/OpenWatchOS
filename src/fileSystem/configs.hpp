@@ -14,7 +14,7 @@ public:
     bool DevMode = false;
   } __attribute__((packed));
   struct devModeConf {
-    bool verboseBoot = false;
+    bool verbose = true;
   } __attribute__((packed));
   struct __attribute__((packed)) {
     internalConf internalConfig;
