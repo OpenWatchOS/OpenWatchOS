@@ -17,7 +17,7 @@ bool FSinit() {
   else{
     Debug.print("using no sd mode");
   }
-  if (!LittleFS.begin()) {
+  if (!LittleFS.begin(true)) {
     return false;
     Serial.println("littleFS failure");
   }

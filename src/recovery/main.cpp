@@ -1,9 +1,9 @@
 #include <Arduino.h>
-#include "stateSwitcher.hpp"
+
 void setup() {
-  initSS();
+  // recovery init
 }
 
 void loop() {
-
+  // recovery logic
 }

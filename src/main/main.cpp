@@ -5,7 +5,7 @@
 #define VERBOSE 1
 int displaytimeold = 0;
 int apptimeold = 0;
-void SysInit()
+void setup()
 {
     display_init();
     Debug.print("main entered");
@@ -28,16 +28,16 @@ void SysInit()
     Configs.load();
     Debug.print("init complete");
 }
-void sysLoop()
+void loop()
 {
-    // int time = millis();
-    // if (time - displaytimeold >= 100)
-    // {
-    //     displaytimeold = time;
-    //     update_screen();
-    // }
-    // if (time - apptimeold >= 1)
-    // {
-    //     // when app support implemented
-    // }
+    int time = millis();
+    if (time - displaytimeold >= 100)
+    {
+        displaytimeold = time;
+        update_screen();
+    }
+    if (time - apptimeold >= 1)
+    {
+        // when app support implemented
+    }
 }
