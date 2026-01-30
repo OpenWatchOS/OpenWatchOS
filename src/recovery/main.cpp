@@ -4,6 +4,7 @@
 
 void setup()
 {
+  setCpuFrequencyMhz(20);
   esp_ota_set_boot_partition(esp_partition_find_first(ESP_PARTITION_TYPE_APP, ESP_PARTITION_SUBTYPE_ANY, "app"));
   esp_restart();
 }

@@ -7,6 +7,7 @@ int displaytimeold = 0;
 int apptimeold = 0;
 void setup()
 {
+    setCpuFrequencyMhz(160);
     display_init();
     Debug.print("main entered");
     draw_bmp(0, 0, splash, 128, 64);
