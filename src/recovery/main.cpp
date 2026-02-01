@@ -5,6 +5,7 @@
 #include <SD.h>
 #include <FS.h>
 #include <LittleFS.h>
+#define SCREEN_ADDRESS 0x3C
 #define SD_CS 7
 bool FSinit()
 {
@@ -31,7 +32,8 @@ void switchToMain()
     return;
   }
   esp_err_t err = esp_ota_set_boot_partition(part);
-  if (err == ESP_OK) {
+  if (err == ESP_OK)
+  {
     ESP.restart();
   }
 }

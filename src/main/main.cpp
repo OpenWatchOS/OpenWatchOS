@@ -2,31 +2,41 @@
 #include "display/bitmaps.hpp"
 #include "fileSystem/configs.hpp"
 #include "debug/debug.hpp"
+#include "shared/displayDriver/SSD1306/SSD1306.hpp"
 #define VERBOSE 1
 int displaytimeold = 0;
 int apptimeold = 0;
+#define SCREEN_ADDRESS 0x3C
 void setup()
 {
     setCpuFrequencyMhz(160);
-    display_init();
-    Debug.print("main entered");
-    draw_bmp(0, 0, splash, 128, 64);
-    update_screen();
+    //display_init();
+    SSD1306 oled(SCREEN_ADDRESS);
+    oled.clear();
+    oled.printChar(0,0,'c');
+    // int x;
+    // for(x = 0; x < 100; x++){
+    //     oled.putPixel(x,1);
+    // }
+    oled.update();
+    //Debug.print("main entered");
+    //draw_bmp(0, 0, splash, 128, 64);
+    //update_screen();
     if (!FSinit())
     {
-        display_clear();
-        draw_bmp(0, 0, drive_err, 128, 64);
-        Debug.print("fs init fail");
-        update_screen();
+        //display_clear();
+        //draw_bmp(0, 0, drive_err, 128, 64);
+        //Debug.print("fs init fail");
+        //update_screen();
         return;
     }
     // LittleFS.format();
-    // if (!fileStructure.rebuild())
-    // {
-    //     Debug.print("rebuild failed");
-    // }
-    // Configs.load();
-    Debug.print("init complete");
+    if (!fileStructure.rebuild())
+    {
+        //Debug.print("rebuild failed");
+    }
+    Configs.load();
+    //Debug.print("init complete");
 }
 void loop()
 {
@@ -34,7 +44,7 @@ void loop()
     if (time - displaytimeold >= 100)
     {
         displaytimeold = time;
-        update_screen();
+        //update_screen();
     }
     if (time - apptimeold >= 1)
     {
