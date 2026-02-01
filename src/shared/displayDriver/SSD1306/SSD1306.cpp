@@ -14,22 +14,29 @@ void SSD1306::data(uint8_t dat)
     Wire.write(dat);
     Wire.endTransmission();
 }
+
 void SSD1306::printChar(int x, int y, char c)
 {
-    if (c < 32 || c > 126)
-        return; // only printable ASCII
-
-    uint8_t charIndex = (c - 32) * 5; // 5 bytes per char (adjust if using 6 or 8)
-
+    const int tune_offset = 0;
+    uint16_t offset = uint8_t(c) * 5;
     for (uint8_t col = 0; col < 5; col++)
-    { // 5 columns wide
-        uint8_t bitmap = pgm_read_byte(&font[charIndex + col]);
+    {
+        uint8_t bitmap = pgm_read_byte(&font[offset + col]);
 
+        // LSB at bottom (most common for this font style)
         for (uint8_t row = 0; row < 8; row++)
-        { // 8 pixels tall
+        {
             bool pixelOn = (bitmap & (1 << row)) != 0;
             putPixel(x + col, y + row, pixelOn);
         }
+    }
+}
+void SSD1306::print(int x, int y, String s)
+{
+    int i;
+    for (size_t i = 0; i < s.length(); i++)
+    {
+        printChar(x + i * 6 + 5, y, s.c_str()[i]);
     }
 }
 void SSD1306::putPixel(int x, int y, bool on)

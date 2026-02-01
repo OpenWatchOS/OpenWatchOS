@@ -8,6 +8,7 @@ public:
     void putPixel(int x, int y, bool on = true);
     void data(uint8_t dat);
     void printChar(int x, int y, char c);
+    void print(int x, int y, String s);
     void clear();
     void update();
     SSD1306(uint8_t i2cAddress);
