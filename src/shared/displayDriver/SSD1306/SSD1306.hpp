@@ -8,12 +8,18 @@ public:
     void putPixel(int x, int y, bool on = true);
     void data(uint8_t dat);
     void printChar(int x, int y, char c);
-    void print(int x, int y, String s);
+    void print(String s);
+    void println(String s);
+    void setCursor(int x, int y);
+    void putBitmap(int x, int y, const uint8_t *bitmap, int w, int h, bool invert = false);
     void clear();
     void update();
+    void init();
     SSD1306(uint8_t i2cAddress);
 
 private:
+    int x = 0;
+    int y = 0;
     uint8_t addr;
     static constexpr int WIDTH = 128;
     static constexpr int HEIGHT = 64;

@@ -6,37 +6,29 @@
 #define VERBOSE 1
 int displaytimeold = 0;
 int apptimeold = 0;
-#define SCREEN_ADDRESS 0x3C
 void setup()
 {
     setCpuFrequencyMhz(160);
-    // display_init();
-    SSD1306 oled(SCREEN_ADDRESS);
-    oled.clear();
-    oled.print(0,0,"test");
-    // int x;
-    // for(x = 0; x < 100; x++){
-    //     oled.putPixel(x,1);
-    // }
-    oled.update();
-    // Debug.print("main entered");
-    // draw_bmp(0, 0, splash, 128, 64);
-    // update_screen();
+    set_cursor(0,0);
+    display_init();
+    Debug.print("main entered");
+    draw_bmp(0, 0, splash, 128, 64);
+    update_screen();
     if (!FSinit())
     {
-        // display_clear();
+        display_clear();
         // draw_bmp(0, 0, drive_err, 128, 64);
-        // Debug.print("fs init fail");
-        // update_screen();
+        Debug.print("fs init fail");
+        update_screen();
         return;
     }
     // LittleFS.format();
     if (!fileStructure.rebuild())
     {
-        // Debug.print("rebuild failed");
+        Debug.print("rebuild failed");
     }
     Configs.load();
-    // Debug.print("init complete");
+    Debug.print("init complete");
 }
 void loop()
 {
@@ -44,7 +36,7 @@ void loop()
     if (time - displaytimeold >= 100)
     {
         displaytimeold = time;
-        // update_screen();
+        update_screen();
     }
     if (time - apptimeold >= 1)
     {

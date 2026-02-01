@@ -1,5 +1,6 @@
 #include "SSD1306.hpp"
-
+#define min(a, b) ((a) < (b) ? (a) : (b))
+#define max(a, b) ((a) > (b) ? (a) : (b))
 void SSD1306::command(uint8_t cmd)
 {
     Wire.beginTransmission(addr); // or 0x3D if that's your address
@@ -31,13 +32,25 @@ void SSD1306::printChar(int x, int y, char c)
         }
     }
 }
-void SSD1306::print(int x, int y, String s)
+void SSD1306::print(String s)
 {
     int i;
     for (size_t i = 0; i < s.length(); i++)
     {
         printChar(x + i * 6 + 5, y, s.c_str()[i]);
     }
+}
+
+void SSD1306::println(String s)
+{
+    print(s);
+    x = 0;                      // reset horizontal too
+    y = min(y + 8, HEIGHT - 8); // prevent overflow
+}
+void SSD1306::setCursor(int X, int Y)
+{
+    x = X;
+    y = Y;
 }
 void SSD1306::putPixel(int x, int y, bool on)
 {
@@ -83,10 +96,28 @@ void SSD1306::update()
         Wire.endTransmission();
     }
 }
-SSD1306::SSD1306(uint8_t i2cAddress) : addr(i2cAddress)
+void SSD1306::putBitmap(int x, int y, const uint8_t *bitmap, int w, int h, bool invert)
 {
-    Wire.begin();
-    Wire.setClock(400000);
+    for (int row = 0; row < h; row++)
+    {
+        for (int col = 0; col < w; col++)
+        {
+            // Assuming common horizontal format: each row padded to byte boundary
+            uint8_t bits = pgm_read_byte(&bitmap[(row * ((w + 7) / 8)) + (col / 8)]);
+            bool pixel = (bits & (0x80 >> (col % 8))) != 0; // MSB left
+
+            if (invert)
+                pixel = !pixel;
+            if (pixel)
+            {
+                putPixel(x + col, y + row, true);
+            }
+        }
+    }
+}
+
+void SSD1306::init()
+{
     // Typical init sequence using the command() function
     command(0xAE); // Display OFF
 
@@ -126,4 +157,10 @@ SSD1306::SSD1306(uint8_t i2cAddress) : addr(i2cAddress)
     command(0xA6); // Normal (not inverted) display
 
     command(0xAF); // Display ON
+}
+
+SSD1306::SSD1306(uint8_t i2cAddress) : addr(i2cAddress)
+{
+    Wire.begin();
+    Wire.setClock(40000);
 }

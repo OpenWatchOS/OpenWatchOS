@@ -5,8 +5,10 @@
 #include <SD.h>
 #include <FS.h>
 #include <LittleFS.h>
+#include "shared/displayDriver/SSD1306/SSD1306.hpp"
 #define SCREEN_ADDRESS 0x3C
 #define SD_CS 7
+SSD1306 oled(SCREEN_ADDRESS);
 bool FSinit()
 {
 
@@ -39,7 +41,12 @@ void switchToMain()
 }
 void setup()
 {
-  setCpuFrequencyMhz(20);
+  setCpuFrequencyMhz(160);
+  oled.init();
+  oled.clear();
+  oled.update();
+  oled.println("recovery env entered");
+  oled.update();
   switchToMain();
 }
 
