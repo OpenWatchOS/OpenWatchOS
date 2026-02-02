@@ -11,7 +11,7 @@ void debug::print(String in)
     {
         OLED.setCursor(0, line);
         OLED.println(in);
-        line + 8;
+        line += 8;
         if (line == SCREEN_HEIGHT - 8)
         {
             line = 0;
