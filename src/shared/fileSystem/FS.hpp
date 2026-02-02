@@ -6,25 +6,15 @@
 #include "HardwareSerial.h"
 #include <LittleFS.h>
 #include "SD.h"
-#include "configs.hpp"
-
+#include "shared/debug/debug.hpp"
 bool FSinit();
 class FileSystem {
 public:
   File open(const char* path, const char* mode = "r", bool create = false);
   bool exists(const char* path);
   bool mkdir(String path);
-  bool mkdirp(String path);
   bool remove(String path);
 private:
   File f;
 };
 extern FileSystem fileSystem;
-class FileStructure{
-  public:
-  bool exists();
-  bool rebuild();
-};
-
-
-extern FileStructure fileStructure;

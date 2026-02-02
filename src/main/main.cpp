@@ -1,8 +1,9 @@
 #include "display/display.hpp"
 #include "display/bitmaps.hpp"
-#include "fileSystem/configs.hpp"
-#include "debug/debug.hpp"
+#include "shared/configs/configs.hpp"
+#include "shared/debug/debug.hpp"
 #include "shared/displayDriver/SSD1306/SSD1306.hpp"
+#include "fileStructure/fileStructure.hpp"
 #define VERBOSE 1
 int displaytimeold = 0;
 int apptimeold = 0;

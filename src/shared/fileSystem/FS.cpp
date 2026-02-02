@@ -1,10 +1,8 @@
 #include "LittleFS.h"
 #include "FS.hpp"
-#include "debug/debug.hpp"
 #define SD_CS 7
 
 FileSystem fileSystem;
-FileStructure fileStructure;
 
 bool FSinit() {
   if (Configs.packedConfigs.devModeConfig.useSD){
@@ -60,19 +58,4 @@ bool FileSystem::remove(String path){
     return LittleFS.remove(path);
   }
   
-}
-bool FileStructure::exists() {
-  return fileSystem.exists(ConfigsLocation);
-}
-bool FileStructure::rebuild() {
-  if (fileStructure.exists()) {
-    if (!Configs.save()) {
-      return false;
-    }
-    Serial.println("conf created");
-  }
-  else{
-    Serial.println("conf already exists");
-  }
-  return true;
 }

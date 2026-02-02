@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "FS.hpp"
+#include "shared/fileSystem/FS.hpp"
 #ifdef DONT_REQUIRE_SD
     #define USE_SD 0
 #else
