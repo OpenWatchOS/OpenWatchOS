@@ -1,6 +1,7 @@
 #include "SSD1306.hpp"
 #define min(a, b) ((a) < (b) ? (a) : (b))
 #define max(a, b) ((a) > (b) ? (a) : (b))
+SSD1306 OLED(SCREEN_ADDRESS);
 void SSD1306::command(uint8_t cmd)
 {
     Wire.beginTransmission(addr); // or 0x3D if that's your address

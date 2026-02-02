@@ -11,17 +11,18 @@ int apptimeold = 0;
 void setup()
 {
     setCpuFrequencyMhz(160);
-    set_cursor(0,0);
-    display_init();
+    displayWrapper.init();
+    displayWrapper.setCursor(0,0);
+    displayWrapper.displayClear();
     Debug.print("main entered");
-    draw_bmp(0, 0, splash, 128, 64);
-    update_screen();
+    displayWrapper.drawBmp(0, 0, splash, 128, 64);
+    displayWrapper.update();
     if (!FSinit())
     {
-        display_clear();
-        // draw_bmp(0, 0, drive_err, 128, 64);
+        displayWrapper.displayClear();
+        displayWrapper.drawBmp(0, 0, drive_err, 128, 64);
         Debug.print("fs init fail");
-        update_screen();
+        displayWrapper.update();
         return;
     }
     // LittleFS.format();
@@ -38,7 +39,7 @@ void loop()
     if (time - displaytimeold >= 100)
     {
         displaytimeold = time;
-        update_screen();
+        displayWrapper.update();
     }
     if (time - apptimeold >= 1)
     {

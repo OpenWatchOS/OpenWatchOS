@@ -3,11 +3,12 @@
 SSD1306 oled(SCREEN_ADDRESS);
 int line = 0;
 
-DisplayWrapper::DisplayWrapper()
+bool DisplayWrapper::init()
 {
   oled.init();
   oled.clear();
   oled.update();
+  return false;
 }
 
 void DisplayWrapper::displayClear()
@@ -17,15 +18,7 @@ void DisplayWrapper::displayClear()
 
 void DisplayWrapper::log(String text)
 {
-  setCursor(0, line);
-  print(text);
-  line += 8;
-  if (line == SCREEN_HEIGHT - 8)
-  {
-    line = 0;
-    displayClear();
-  }
-  update();
+
 }
 
 void DisplayWrapper::print(String text)

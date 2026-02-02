@@ -1,6 +1,9 @@
 #pragma once
 #include <Wire.h>
 #include "glcdfont.hpp"
+#define SCREEN_ADDRESS 0x3C
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
 class SSD1306
 {
 public:
@@ -21,10 +24,11 @@ private:
     int x = 0;
     int y = 0;
     uint8_t addr;
-    static constexpr int WIDTH = 128;
-    static constexpr int HEIGHT = 64;
+    static constexpr int WIDTH = SCREEN_WIDTH;
+    static constexpr int HEIGHT = SCREEN_HEIGHT;
     static constexpr int PAGES = HEIGHT / 8;          // 8
     static constexpr int BUFFER_SIZE = WIDTH * PAGES; // 1024
 
     uint8_t frameBuffer[BUFFER_SIZE]{}; // the 1 KB buffer
 };
+extern SSD1306 OLED;

@@ -12,7 +12,7 @@ extern SSD1306 oled;
 class DisplayWrapper
 {
 public:
-    DisplayWrapper();
+    bool init();
     void displayClear();
     void log(String text);
     void print(String text);

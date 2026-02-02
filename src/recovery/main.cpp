@@ -6,7 +6,7 @@
 #include <FS.h>
 #include <LittleFS.h>
 #include "shared/displayDriver/SSD1306/SSD1306.hpp"
-#define SCREEN_ADDRESS 0x3C
+
 #define SD_CS 7
 SSD1306 oled(SCREEN_ADDRESS);
 void switchToMain()
