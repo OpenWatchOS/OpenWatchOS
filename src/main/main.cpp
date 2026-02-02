@@ -1,4 +1,4 @@
-#include "display/display.hpp"
+#include "display/displayWrapper.hpp"
 #include "display/bitmaps.hpp"
 #include "shared/configs/configs.hpp"
 #include "shared/debug/debug.hpp"
@@ -7,6 +7,7 @@
 #define VERBOSE 1
 int displaytimeold = 0;
 int apptimeold = 0;
+
 void setup()
 {
     setCpuFrequencyMhz(160);
