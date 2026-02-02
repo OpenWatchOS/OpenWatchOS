@@ -163,5 +163,5 @@ void SSD1306::init()
 SSD1306::SSD1306(uint8_t i2cAddress) : addr(i2cAddress)
 {
     Wire.begin();
-    Wire.setClock(40000);
+    Wire.setClock(90000);
 }

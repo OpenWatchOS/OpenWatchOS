@@ -14,8 +14,8 @@ void setup()
     displayWrapper.init();
     displayWrapper.setCursor(0,0);
     displayWrapper.displayClear();
-    Debug.print("main entered");
     displayWrapper.drawBmp(0, 0, splash, 128, 64);
+    Debug.print("main entered");
     displayWrapper.update();
     if (!FSinit())
     {

@@ -8,7 +8,6 @@
 #include "shared/displayDriver/SSD1306/SSD1306.hpp"
 
 #define SD_CS 7
-SSD1306 oled(SCREEN_ADDRESS);
 void switchToMain()
 {
   const esp_partition_t *part = esp_partition_find_first(ESP_PARTITION_TYPE_APP, ESP_PARTITION_SUBTYPE_APP_OTA_1, NULL);
@@ -25,11 +24,11 @@ void switchToMain()
 void setup()
 {
   setCpuFrequencyMhz(160);
-  oled.init();
-  oled.clear();
-  oled.update();
-  oled.println("recovery env entered");
-  oled.update();
+  OLED.init();
+  OLED.clear();
+  OLED.update();
+  OLED.println("recovery env entered");
+  OLED.update();
   switchToMain();
 }
 

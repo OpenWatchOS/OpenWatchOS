@@ -8,7 +8,7 @@
 #define OLED_RESET -1
 #define SCREEN_ADDRESS 0x3C
 
-extern SSD1306 oled;
+extern SSD1306 OLED;
 class DisplayWrapper
 {
 public:
