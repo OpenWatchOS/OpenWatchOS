@@ -4,15 +4,15 @@
 #include "shared/debug/debug.hpp"
 #include "shared/displayDriver/SSD1306/SSD1306.hpp"
 #include "fileStructure/fileStructure.hpp"
+#include "shared/buttons/buttons.hpp"
 #define VERBOSE 1
 int displaytimeold = 0;
 int apptimeold = 0;
-
 void setup()
 {
     setCpuFrequencyMhz(160);
     displayWrapper.init();
-    displayWrapper.setCursor(0,0);
+    displayWrapper.setCursor(0, 0);
     displayWrapper.displayClear();
     displayWrapper.drawBmp(0, 0, splash, 128, 64);
     Debug.print("main entered");
@@ -25,7 +25,7 @@ void setup()
         displayWrapper.update();
         return;
     }
-    // LittleFS.format();
+    LittleFS.format();
     if (!fileStructure.rebuild())
     {
         Debug.print("rebuild failed");
