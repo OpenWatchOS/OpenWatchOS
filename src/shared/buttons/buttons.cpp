@@ -1,14 +1,17 @@
 #include "buttons.hpp"
-std::vector<uint8_t> buttonsClass::pressRegistry;
+buttonsClass buttons;
+bool buttonsClass::BTN0_Pressed = false;
+bool buttonsClass::BTN1_Pressed = false;
+bool buttonsClass::BTN2_Pressed = false;
 void ARDUINO_ISR_ATTR buttonsClass::buttonConfirmISR()
 {
     static unsigned long lastConfirmTime = 0; // static = keeps value between calls
     unsigned long now = millis();             // safe to call in ESP32 ISR
 
     if (now - lastConfirmTime >= 50)
-    {                                   // 50 ms = good starting value
-        pressRegistry.push_back(BTN_1); // only register if enough time passed
-        lastConfirmTime = now;          // update timestamp
+    {                          // 50 ms = good starting value
+        BTN1_Pressed = true;   // only register if enough time passed
+        lastConfirmTime = now; // update timestamp
     }
 }
 
@@ -18,9 +21,10 @@ void ARDUINO_ISR_ATTR buttonsClass::buttonUpISR()
     unsigned long now = millis();             // safe to call in ESP32 ISR
 
     if (now - lastConfirmTime >= 50)
-    {                                   // 50 ms = good starting value
-        pressRegistry.push_back(BTN_2); // only register if enough time passed
-        lastConfirmTime = now;          // update timestamp
+    { // 50 ms = good starting value
+        BTN2_Pressed = true;
+        ;                      // only register if enough time passed
+        lastConfirmTime = now; // update timestamp
     }
 }
 
@@ -30,9 +34,9 @@ void ARDUINO_ISR_ATTR buttonsClass::buttonDownISR()
     unsigned long now = millis();             // safe to call in ESP32 ISR
 
     if (now - lastConfirmTime >= 50)
-    {                                   // 50 ms = good starting value
-        pressRegistry.push_back(BTN_0); // only register if enough time passed
-        lastConfirmTime = now;          // update timestamp
+    {                          // 50 ms = good starting value
+        BTN0_Pressed = true;   // only register if enough time passed
+        lastConfirmTime = now; // update timestamp
     }
 }
 
@@ -56,14 +60,29 @@ bool buttonsClass::init()
 
 bool buttonsClass::checkBtnPress(int b)
 {
-    if (pressRegistry.empty())
+    switch (b)
     {
-        return false; // or whatever makes sense for "no press"
-    }
-    else
-    {
-        Debug.print(String(pressRegistry.at(0)));
-        pressRegistry.erase(pressRegistry.begin());
-        return true;
+    case 0:
+        if (BTN0_Pressed)
+        {
+            BTN0_Pressed = false;
+            return true;
+        }
+
+    case 1:
+        if (BTN1_Pressed)
+        {
+            BTN1_Pressed = false;
+            return true;
+        }
+    case 2:
+        if (BTN2_Pressed)
+        {
+            BTN2_Pressed = false;
+            return true;
+        }
+
+    default:
+        return false;
     }
 }

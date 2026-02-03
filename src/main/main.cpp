@@ -40,6 +40,7 @@ void loop()
     {
         displaytimeold = time;
         displayWrapper.update();
+        Debug.print(String(buttons.checkBtnPress(buttons.BTN_0)));
     }
     if (time - apptimeold >= 1)
     {
