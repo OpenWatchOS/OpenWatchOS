@@ -1,16 +1,14 @@
 #include "buttons.hpp"
+#include <functional>
 buttonsClass buttons;
-bool buttonsClass::BTN0_Pressed = false;
-bool buttonsClass::BTN1_Pressed = false;
-bool buttonsClass::BTN2_Pressed = false;
+std::function<int(void)> funcs[10];
 void ARDUINO_ISR_ATTR buttonsClass::buttonConfirmISR()
 {
     static unsigned long lastConfirmTime = 0; // static = keeps value between calls
     unsigned long now = millis();             // safe to call in ESP32 ISR
 
     if (now - lastConfirmTime >= 50)
-    {                          // 50 ms = good starting value
-        BTN1_Pressed = true;   // only register if enough time passed
+    {                          // 50 ms = good starting value 
         lastConfirmTime = now; // update timestamp
     }
 }
@@ -22,7 +20,6 @@ void ARDUINO_ISR_ATTR buttonsClass::buttonUpISR()
 
     if (now - lastConfirmTime >= 50)
     { // 50 ms = good starting value
-        BTN2_Pressed = true;
         ;                      // only register if enough time passed
         lastConfirmTime = now; // update timestamp
     }
@@ -34,8 +31,7 @@ void ARDUINO_ISR_ATTR buttonsClass::buttonDownISR()
     unsigned long now = millis();             // safe to call in ESP32 ISR
 
     if (now - lastConfirmTime >= 50)
-    {                          // 50 ms = good starting value
-        BTN0_Pressed = true;   // only register if enough time passed
+    {                          // 50 ms = good starting value  // only register if enough time passed
         lastConfirmTime = now; // update timestamp
     }
 }
@@ -47,9 +43,9 @@ bool buttonsClass::init()
         pinMode(0, INPUT_PULLUP);
         pinMode(1, INPUT_PULLUP);
         pinMode(2, INPUT_PULLUP);
-        attachInterrupt(digitalPinToInterrupt(BTN_DOWN_PIN), buttonDownISR, FALLING);
-        attachInterrupt(digitalPinToInterrupt(BTN_CONFIRM_PIN), buttonConfirmISR, FALLING);
-        attachInterrupt(digitalPinToInterrupt(BTN_UP_PIN), buttonUpISR, FALLING);
+        attachInterrupt(BTN_DOWN_PIN, buttonDownISR, FALLING);
+        attachInterrupt(BTN_CONFIRM_PIN, buttonConfirmISR, FALLING);
+        attachInterrupt(BTN_UP_PIN, buttonUpISR, FALLING);
         return true;
     }
     catch (int e)
@@ -58,31 +54,15 @@ bool buttonsClass::init()
     }
 }
 
-bool buttonsClass::checkBtnPress(int b)
+int buttonsClass::installBtnPressHandler(int (*func)(void))
 {
-    switch (b)
-    {
-    case 0:
-        if (BTN0_Pressed)
-        {
-            BTN0_Pressed = false;
-            return true;
-        }
+    const int count = sizeof(funcs) / sizeof(funcs[0]);
 
-    case 1:
-        if (BTN1_Pressed)
-        {
-            BTN1_Pressed = false;
-            return true;
+    for (int i = 0; i < count; i++) {
+        if (!funcs[i]) {
+            funcs[i] = func;
+            return i;
         }
-    case 2:
-        if (BTN2_Pressed)
-        {
-            BTN2_Pressed = false;
-            return true;
-        }
-
-    default:
-        return false;
     }
+    return -1;
 }

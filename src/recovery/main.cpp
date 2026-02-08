@@ -1,10 +1,6 @@
 #include <Arduino.h>
 #include <esp_ota_ops.h>
 #include <esp_partition.h>
-#include "shared/buttons/buttons.hpp"
-#include <SD.h>
-#include <FS.h>
-#include <LittleFS.h>
 #include "shared/displayDriver/SSD1306/SSD1306.hpp"
 
 #define SD_CS 7
@@ -23,7 +19,7 @@ void switchToMain()
 }
 void setup()
 {
-  setCpuFrequencyMhz(160);
+  setCpuFrequencyMhz(20);
   OLED.init();
   OLED.clear();
   OLED.update();

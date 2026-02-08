@@ -8,6 +8,9 @@
 #define VERBOSE 1
 int displaytimeold = 0;
 int apptimeold = 0;
+int handlerTest(void){
+
+}
 void setup()
 {
     setCpuFrequencyMhz(160);
@@ -32,6 +35,7 @@ void setup()
     }
     Configs.load();
     Debug.print("init complete");
+    buttons.installBtnPressHandler(handlerTest);
 }
 void loop()
 {
@@ -40,7 +44,7 @@ void loop()
     {
         displaytimeold = time;
         displayWrapper.update();
-        Debug.print(String(buttons.checkBtnPress(buttons.BTN_0)));
+
     }
     if (time - apptimeold >= 1)
     {

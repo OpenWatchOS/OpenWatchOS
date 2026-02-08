@@ -16,12 +16,9 @@ public:
         BTN_3
     };
     bool init();
-    bool checkBtnPress(int b);
+    int installBtnPressHandler(int (*func)(void));
 
 private:
-    static bool BTN0_Pressed;
-    static bool BTN1_Pressed;
-    static bool BTN2_Pressed;
     static void ARDUINO_ISR_ATTR buttonConfirmISR();
     static void ARDUINO_ISR_ATTR buttonUpISR();
     static void ARDUINO_ISR_ATTR buttonDownISR();
